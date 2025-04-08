@@ -5,8 +5,6 @@ from flask import Flask, request, jsonify
 def process_excel(file_path):
     try:
         df = pd.read_excel(file_path)
-        df.columns = df.columns.str.strip()
-        print("Column Names:", df.columns.tolist())
         df.rename(columns={'API WELL  NUMBER': 'well'}, inplace=True)
         annual_data = df.groupby('well')[['OIL', 'GAS', 'BRINE']].sum().reset_index()
         return annual_data
